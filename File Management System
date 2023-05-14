@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void createFile() {
+    char fileName[100];
+    printf("Enter the name of the file to create: ");
+    scanf("%s", fileName);
+
+    FILE *file = fopen(fileName, "w");
+    if (file == NULL) {
+        printf("Unable to create the file.\n");
+        return;
+    }
+
+    printf("File created successfully.\n");
+    fclose(file);
+}
+
+void deleteFile() {
+    char fileName[100];
+    printf("Enter the name of the file to delete: ");
+    scanf("%s", fileName);
+
+    if (remove(fileName) == 0)
+        printf("File deleted successfully.\n");
+    else
+        printf("Unable to delete the file.\n");
+}
+
+void modifyFile() {
+    char fileName[100];
+    printf("Enter the name of the file to modify: ");
+    scanf("%s", fileName);
+
+    FILE *file = fopen(fileName, "a");
+    if (file == NULL) {
+        printf("Unable to open the file.\n");
+        return;
+    }
+
+    char content[1000];
+    printf("Enter the content to append to the file:\n");
+    scanf(" %[^\n]", content);
+
+    fprintf(file, "%s\n", content);
+    printf("Content appended to the file successfully.\n");
+    fclose(file);
+}
+
+int main() {
+    int choice;
+
+    do {
+        printf("\nFile Management Menu:\n");
+        printf("1. Create a file\n");
+        printf("2. Delete a file\n");
+        printf("3. Modify a file\n");
+        printf("4. Exit\n");
+        printf("Enter your choice (1-4): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                createFile();
+                break;
+            case 2:
+                deleteFile();
+                break;
+            case 3:
+                modifyFile();
+                break;
+            case 4:
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}
